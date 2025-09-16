@@ -1,8 +1,48 @@
 import mensajeria.*
 import mensajeros.*
 
+describe "Segunda parte: " {
+	
+	test "Se puede contratar a Morfeo" {
+		mensajeria.despedirATodos()
+		mensajeria.contratar(morfeo)
+		assert.equals(1, mensajeria.empleados.size())
+	}
 
-describe "2 " {}
+	test "Se puede despedir a un mensajero" {
+		mensajeria.despedirATodos()
+		mensajeria.contratar(morfeo)
+		mensajeria.despedir(morfeo)
+		assert.equals(0, mensajeria.empleados.size())
+	}
 
+	test "Se puede despedir a todos" {
+		mensajeria.contratar(morfeo)
+		mensajeria.contratar(camion)
+		mensajeria.despedirATodos()
+		assert.equals(0, mensajeria.empleados.size())
+	}
 
-describe "3 " {}
+	test "La mensajeria es grande si tiene más de 2 empleados" {
+		mensajeria.despedirATodos()
+		mensajeria.contratar(morfeo)
+		mensajeria.contratar(monopatin)
+		mensajeria.contratar(camion)
+		assert.that(mensajeria.esGrande())
+	}
+
+	test "El primer empleado puede entregar un paquete pago con destino puente" {
+		mensajeria.despedirATodos()
+		paquete.pagar()
+		paquete.destino(puente)
+		mensajeria.contratar(morfeo)
+		assert.that(mensajeria.puedeEntregarPrimero(paquete))
+	}
+
+	test "Se puede saber el peso del último empleado contratado" {
+		mensajeria.despedirATodos()
+		morfeo.transporte(monopatin)
+		mensajeria.contratar(morfeo)
+		assert.equals(91, mensajeria.pesoUltimo())
+	}
+}
